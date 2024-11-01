@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingreso de Números y Verificación de Contraseña</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto;
+            width: 50%;
+            font-size: 1em;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        input[readonly] {
+            background-color: #e9ecef;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cálculo de Suma y Promedio de Números</h1>
+    <label for="numeros">Ingrese los números (separados por comas):</label>
+    <input type="text" id="numeros">
+    <br><br>
+    <button type="button" onclick="calcular()">Calcular</button>
+    <br><br>
+
+    <label>Suma total:</label>
+    <input type="text" id="sumaTotal" readonly>
+    <br><br>
+
+    <label>Promedio:</label>
+    <input type="text" id="promedio" readonly>
+    <br><br>
+
+    <div class="error" id="mensajeErrorNumeros"></div>
+
+    <script>
+        function calcular() {
+            const input = document.querySelector("#numeros").value;
+            const numeros = input.split(',').map(num => parseFloat(num.trim()));
+            let sumaTotal = 0;
+
+            const numerosValidos = numeros.filter(num => num !== undefined && num !== null);
+            const mensajeError = document.querySelector("#mensajeErrorNumeros");
+            mensajeError.textContent = "";
+
+            if (numerosValidos.length === 0) {
+                mensajeError.textContent = "Por favor, ingrese al menos un número válido.";
+                return;
+            }
+
+            for (let i = 0; i < numerosValidos.length; i++) {
+                sumaTotal += numerosValidos[i];
+            }
+
+            const promedio = sumaTotal / numerosValidos.length;
+
+            document.querySelector("#sumaTotal").value = sumaTotal.toFixed(2);
+            document.querySelector("#promedio").value = promedio.toFixed(2);
+        }
+    </script>
+
+    <h1>Ingreso de Números</h1>
+    <label for="numero">Ingrese un número (negativo para salir):</label>
+    <input type="text" id="numero">
+    <br>
+    <button type="button" onclick="ingresarNumero()">Agregar Número</button>
+    <br>
+
+    <label>Números ingresados:</label>
+    <input type="text" id="numerosIngresados" readonly>
+    <br>
+
+    <div class="error" id="mensajeErrorIngreso"></div>
+
+    <script>
+        function ingresarNumero() {
+            const input = document.querySelector("#numero").value;
+            const numero = parseFloat(input);
+            const mensajeError = document.querySelector("#mensajeErrorIngreso");
+            mensajeError.textContent = "";
+
+            if (input.trim() === "" || numero === undefined) {
+                mensajeError.textContent = "Ingrese un número válido.";
+                return;
+            }
+
+            if (numero < 0) {
+                mensajeError.textContent = "Ingreso finalizado. Números ingresados: " + document.querySelector("#numerosIngresados").value;
+                document.querySelector("#numero").disabled = true;
+                document.querySelector("#numero").value = "";
+                return;
+            }
+
+            const numerosIngresados = document.querySelector("#numerosIngresados");
+            numerosIngresados.value += (numerosIngresados.value ? ', ' : '') + numero;
+
+            document.querySelector("#numero").value = "";
+        }
+    </script>
+
+    <h1>Verificación de Contraseña</h1>
+    <label for="contraseña">Ingrese la contraseña:</label>
+    <input type="password" id="contraseña">
+    <br>
+    <button type="button" onclick="verificarContraseña()">Verificar</button>
+    <br>
+    <div class="error" id="mensajeErrorContraseña"></div>
+
+    <script>
+        function verificarContraseña() {
+            const contraseñaCorrecta = "6789";
+            let contraseñaIngresada;
+            let mensajeError = document.querySelector("#mensajeErrorContraseña");
+            mensajeError.textContent = "";
+
+            do {
+                contraseñaIngresada = document.querySelector("#contraseña").value;
+
+                if (contraseñaIngresada !== contraseñaCorrecta) {
+                    mensajeError.textContent = "Contraseña incorrecta, inténtalo de nuevo.";
+                    return;
+                }
+            } while (contraseñaIngresada !== contraseñaCorrecta);
+
+            mensajeError.textContent = "¡Contraseña correcta!";
+        }
+    </script>
+</body>
+</html>
+
