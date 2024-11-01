@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificación de Calificación, Par/Impar, Descuento, Adivinanza</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+    
+        h1 {
+            color: #333;
+            text-align: center;
+            font-size: 1.5em;
+        }
+    
+        label {
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+    
+        input[type="text"] {
+            width: 90%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+    
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 10px auto;
+            width: 40%;
+            font-size: 0.9em;
+        }
+    
+        button:hover {
+            background-color: #218838;
+        }
+    
+        input[readonly] {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>VERIFICACIÓN DE CALIFICACIONES</h1>
+    <label>Calificación:</label>
+    <input type="text" id="calificacion1">
+    <br><br>
+    <button type="button" onclick="verEstadoCalificacion()">Ver Estado</button>
+    <br><br>
+    <label>Resultado:</label>
+    <input type="text" id="resultadoCalificacion" readonly>
+
+    <script>
+        function verEstadoCalificacion() {
+            const calificacion1 = parseFloat(document.querySelector("#calificacion1").value);
+            let resultado;
+
+            if (calificacion1 >= 90 && calificacion1 <= 100) {
+                resultado = "Aprobado con honores";
+            } else if (calificacion1 >= 70 && calificacion1 < 90) {
+                resultado = "Aprobado";
+            } else if (calificacion1 < 70 && calificacion1 >= 0) {
+                resultado = "Reprobado";
+            } else {
+                resultado = "Calificación no válida";
+            }
+            document.querySelector("#resultadoCalificacion").value = resultado;
+        }
+    </script>
+
+    <h1>DETERMINACIÓN NÚMERO PAR O IMPAR</h1>
+    <label>Número:</label>
+    <input type="text" id="numero">
+    <br><br>
+    <button type="button" onclick="verificarParImpar()">Comprobar</button>
+    <br><br>
+    <label>Resultado:</label>
+    <input type="text" id="resultadoParImpar" readonly>
+
+    <script>
+        function verificarParImpar() {
+            const num1 = parseFloat(document.querySelector("#numero").value);
+            let resultado;
+            if (num1 % 2 === 0) {
+                resultado = "El número es par";
+            } else {
+                resultado = "El número es impar";
+            }
+
+            document.querySelector("#resultadoParImpar").value = resultado;
+        }
+    </script>
+
+    <h1>EVALUACIÓN DE DESCUENTOS</h1>
+    <label>Monto total de la compra:</label>
+    <input type="text" id="Monto">
+    <br><br>
+    <button type="button" onclick="calcularDescuento()">Calcular Descuento</button>
+    <br><br>
+    <label>Monto final a pagar:</label>
+    <input type="text" id="MontoFinal" readonly>
+
+    <script>
+        function calcularDescuento() {
+            const Monto = parseFloat(document.querySelector("#Monto").value);
+            let MontoFinal;
+
+            if (Monto > 100) {
+                MontoFinal =Monto * (1 - 0.10);
+            } else {
+                MontoFinal = Monto;
+            }
+
+            document.querySelector("#MontoFinal").value = MontoFinal;
+        }
+    </script>
+
+    <h1>JUEGO DE ADIVINANZAS</h1>
+    <label>Ingrese su número (entre 1 y 10):</label>
+    <input type="text" id="valor">
+    <br><br>
+    <button type="button" onclick="Adivinar()">Adivinar</button>
+    <br><br>
+    <label>Estado de la adivinanza:</label>
+    <input type="text" id="adivinanza" readonly>
+
+    <script>
+        const numeroMaquina = Math.floor(Math.random() * 10) + 1;
+
+        function Adivinar() {
+            const valorUsuario = parseInt(document.querySelector("#valor").value);
+            let resultado;
+
+            if (valorUsuario === numeroMaquina) {
+                resultado = "¡Felicitaciones! Adivinaste el número";
+            } else if (valorUsuario >= 1 && valorUsuario <= 10) {
+                resultado = `Lo siento, el número era ${numeroMaquina}`;
+            } else {
+                resultado = "Por favor, ingresa un número válido entre 1 y 10";
+            }
+
+            document.querySelector("#adivinanza").value = resultado;
+        }
+    </script>
+
+</body>
+</html>
